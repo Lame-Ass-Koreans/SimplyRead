@@ -7,6 +7,7 @@ import { RightSideNavFixed } from '../Navigation/rightSideNav';
 import { StickyNav } from '../Navigation/stickyNav';
 import { Nav } from "react-bootstrap";
 import { rightSideMenuHook } from './NavFunc'
+import './MainPage.css'
 
 
 export const MainPage = () => {
@@ -27,7 +28,8 @@ export const MainPage = () => {
     }
 
     const stickyLinks : JSX.Element[] = [      
-        <li><a style={{fontWeight: "bold", fontSize:"32px"}}>Magic Simplify</a></li>,
+        <li><a style={{fontFamily: "Stencil Std", fontWeight: "bold", fontSize:"32px"}}>Simply Read</a></li>,
+        //<li><img src="logo.png" height = "70px" width = "200px" alt="me"/></li>,
         <li><a>Home</a></li>,
         <li><a>Profile</a></li>,
         <li><a>Login</a></li>
