@@ -7,13 +7,14 @@ import { RightSideNavFixed } from '../Navigation/rightSideNav';
 import { StickyNav } from '../Navigation/stickyNav';
 import { Nav } from "react-bootstrap";
 import { rightSideMenuHook } from './NavFunc'
-
+import axios from 'axios'
 
 export const MainPage = () => {
     const IS_LAST_SMALLER_THEN_PREV = true;
     const elIDs : Array<string> = []
 
     const [mode, setMode] = useState("");
+    const [currentText, setCurrentText] = useState("");
 
     useEffect(() => {
         rightSideMenuHook(IS_LAST_SMALLER_THEN_PREV, elIDs, 80)
@@ -32,6 +33,19 @@ export const MainPage = () => {
         <li><a>Profile</a></li>,
         <li><a>Login</a></li>
     ];
+
+    const callReplaceBadWords = async (s : string) => {
+        const resp = await axios.get(`http://localhost:8000/badwords`,{
+            params: {
+                target_string: s, 
+            },
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache"
+            },
+        });
+        setCurrentText(resp.data.data)
+    }
 
     return (
         <div>
@@ -65,6 +79,7 @@ export const MainPage = () => {
                 <div style={{margin:"auto"}}>
                     <button onClick={() => {
                         setMode("")
+                        setCurrentText("")
                     }}>
                         Go Back
                     </button>
@@ -72,7 +87,7 @@ export const MainPage = () => {
             }
             {mode === "WRITE" && 
                 <form>
-                    <textarea className="uk-textarea" placeholder="Type your content here"></textarea>
+                    <textarea value={currentText} onChange={(e) => {setCurrentText(e.target.value)}} className="uk-textarea" placeholder="Type your content here"></textarea>
                 </form>
             }
             {mode === "URL" && 
@@ -92,6 +107,16 @@ export const MainPage = () => {
                         </div>
                     </div>
                 </form>
+            }
+            {currentText !== "" && 
+                <div style={{margin:"auto"}}>
+                    <button onClick={() => {
+                        callReplaceBadWords(currentText)
+                    
+                    }}>
+                        Magify it!
+                    </button>
+                </div>
             }
             
 
