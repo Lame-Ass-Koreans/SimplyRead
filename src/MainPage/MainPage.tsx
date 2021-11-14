@@ -15,9 +15,29 @@ export const MainPage = () => {
 
     const [mode, setMode] = useState("");
     const [currentText, setCurrentText] = useState("");
+    
+    const [showLogin, setShowLogin] = useState(false)
+    const [displayName, setDisplayName] = useState("")
+
+    const [userName, setUserName] = useState("")
+    const [password, setPassword] = useState("")
+
+    const [badLogin, setBadLogin] = useState(false)
+
+    const [userDisplay, setUserDisplay] = useState("")
+    const [userScore, setUserScore] = useState("")
 
     useEffect(() => {
         rightSideMenuHook(IS_LAST_SMALLER_THEN_PREV, elIDs, 80)
+        const ud = localStorage.getItem('userDisplay');
+        if (ud) {
+            setDisplayName(ud)
+        }
+        const us = localStorage.getItem('userScore');
+        if (us) {
+            setUserScore(us)
+        }
+
     })
 
     const hamburgerLinks : Array<JSX.Element>= [
@@ -31,8 +51,17 @@ export const MainPage = () => {
         <li><a style={{fontWeight: "bold", fontSize:"32px"}}>Magic Simplify</a></li>,
         <li><a>Home</a></li>,
         <li><a>Profile</a></li>,
-        <li><a>Login</a></li>
+        
     ];
+    if (displayName === "") {
+        stickyLinks.push(<li><a onClick={() => {setShowLogin(!showLogin)}}>Login</a></li>) 
+    }
+    else {
+        stickyLinks.push(<li><a>Hello {displayName}!</a></li>) 
+        stickyLinks.push(<li><a>Your Score: {userScore}!</a></li>) 
+        stickyLinks.push(<li><a onClick={() => {signOut()}}>Sign Out</a></li>)
+
+    }
 
     const callReplaceBadWords = async (s : string) => {
         const resp = await axios.get(`http://localhost:8000/badwords`,{
@@ -47,77 +76,133 @@ export const MainPage = () => {
         setCurrentText(resp.data.data)
     }
 
+    const signOut = () => {
+        localStorage.clear()
+        setUserScore("")
+        setDisplayName("")
+    }
+
+    const callLogin = async () => {
+        const resp : any = await axios.get(`http://localhost:8000/login`,{
+            params: {
+                username : userName,
+                password: password
+            },
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache"
+            },
+        }).catch(e => {
+            setBadLogin(true)
+        })
+        if (!resp) {
+            return
+        }
+        localStorage.setItem('userDisplay', resp.data.displayname);
+        localStorage.setItem('userScore', resp.data.score.toString());
+        setDisplayName(resp.data.displayname)
+        setUserScore(resp.data.score)
+        setShowLogin(false)
+        setUserName("")
+        setPassword("")
+    }
+
     return (
-        <div>
+        <div style={{height:"350px", backgroundColor: "grey"}}>
             <div>
                 <StickyNav toggleRSM={false} links={stickyLinks}/>
             </div>
-            {mode === "" && <div style={{display: "flex"}}>
-                <div style={{margin:"auto"}}>
-                    <button onClick={() => {
-                        setMode("WRITE")
-                    }}>
-                        Paste/Write
-                    </button>
-                </div>
-                <div style={{margin:"auto"}}>
-                    <button onClick={() => {
-                        setMode("URL")
-                    }}>
-                        Import from URL
-                    </button>
-                </div>
-                <div style={{margin:"auto"}}>
-                    <button onClick={() => {
-                        setMode("UPLOAD")
-                    }}>
-                        Upload a file
-                    </button>
-                </div>
-            </div>}
-            {mode !== "" && 
-                <div style={{margin:"auto"}}>
-                    <button onClick={() => {
-                        setMode("")
-                        setCurrentText("")
-                    }}>
-                        Go Back
-                    </button>
-                </div>
-            }
-            {mode === "WRITE" && 
-                <form>
-                    <textarea value={currentText} onChange={(e) => {setCurrentText(e.target.value)}} className="uk-textarea" placeholder="Type your content here"></textarea>
-                </form>
-            }
-            {mode === "URL" && 
-                <form>
-                     <div className="uk-margin">
-                        <input className="uk-input" type="text" placeholder="Type your url here"/>
-                    </div>
-                </form>
-            }
-            {mode === "UPLOAD" && 
-                <form>
-                    <div className="js-upload uk-placeholder uk-text-center">
-                        <span uk-icon="icon: cloud-upload"></span>
-                        <span className="uk-text-middle">Attach binaries by dropping them here or selecting one</span>
-                        <div uk-form-custom>
-                            <input type="file" multiple/>
+            {showLogin && 
+                <div>
+                    <div>
+                        <div>
+                            <input value={userName} onChange={(e) => {setUserName(e.target.value);setBadLogin(false)}} style={{backgroundColor:"lightgrey"}}className="uk-input" type="text" placeholder="Username"/>
                         </div>
+                        <div>
+                            <input value={password} onChange={(e) => {setPassword(e.target.value);setBadLogin(false)}} style={{backgroundColor:"lightgrey"}}className="uk-input" type="password" placeholder="Password"/>
+                        </div>
+                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
+                            callLogin()
+                        }}>
+                            Login
+                        </button>
+                        {badLogin && <p style={{color: "red"}}>
+                            Login Failed!
+                        </p>}
                     </div>
-                </form>
-            }
-            {currentText !== "" && 
-                <div style={{margin:"auto"}}>
-                    <button onClick={() => {
-                        callReplaceBadWords(currentText)
-                    
-                    }}>
-                        Magify it!
-                    </button>
                 </div>
             }
+            <div>
+                {mode === "" && <div style={{display: "flex", marginTop:"100px"}}>
+                    <div style={{margin:"auto"}}>
+                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
+                            setMode("WRITE")
+                        }}>
+                            Paste/Write
+                        </button>
+                    </div>
+                    <div style={{margin:"auto"}}>
+                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
+                            setMode("URL")
+                        }}>
+                            Import from URL
+                        </button>
+                    </div>
+                    <div style={{margin:"auto"}}>
+                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
+                            setMode("UPLOAD")
+                        }}>
+                            Upload a file
+                        </button>
+                    </div>
+                </div>}
+                {mode !== "" && 
+                    <div style={{margin:"auto"}}>
+                        <button className="uk-button uk-button-secondary uk-button-large"
+                        onClick={() => {
+                            setMode("")
+                            setCurrentText("")
+                        }}>
+                            Go Back
+                        </button>
+                    </div>
+                }
+                {mode === "WRITE" && 
+                    <form>
+                        <textarea style={{height:"500px"}} value={currentText} onChange={(e) => {setCurrentText(e.target.value)}} className="uk-textarea" placeholder="Type your content here"></textarea>
+                    </form>
+                }
+                {mode === "URL" && 
+                    <form>
+                        <div className="uk-margin">
+                            <input style={{backgroundColor:"lightgrey"}}className="uk-input" type="text" placeholder="Type your url here"/>
+                        </div>
+                    </form>
+                }
+                {mode === "UPLOAD" && 
+                    <form>
+                        <div className="js-upload uk-placeholder uk-text-center">
+                            <span uk-icon="icon: cloud-upload"></span>
+                            <span style={{color:"black"}} className="uk-text-middle">Attach binaries by dropping them here or selecting one</span>
+                            <div style={{color:"black"}} uk-form-custom>
+                                <input type="file" multiple/>
+                            </div>
+                        </div>
+                    </form>
+                }
+                {currentText !== "" && 
+                    <div style={{margin:"auto"}}>
+                        <button onClick={() => {
+                            callReplaceBadWords(currentText)
+                        
+                        }}>
+                            Magify it!
+                        </button>
+                    </div>
+                }
+
+            </div>
+            
             
 
         </div>
