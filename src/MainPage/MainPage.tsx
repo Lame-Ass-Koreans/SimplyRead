@@ -7,6 +7,7 @@ import { RightSideNavFixed } from '../Navigation/rightSideNav';
 import { StickyNav } from '../Navigation/stickyNav';
 import { Nav } from "react-bootstrap";
 import { rightSideMenuHook } from './NavFunc'
+import axios from 'axios'
 import './MainPage.css'
 
 
@@ -15,9 +16,30 @@ export const MainPage = () => {
     const elIDs : Array<string> = []
 
     const [mode, setMode] = useState("");
+    const [currentText, setCurrentText] = useState("");
+    
+    const [showLogin, setShowLogin] = useState(false)
+    const [displayName, setDisplayName] = useState("")
+
+    const [userName, setUserName] = useState("")
+    const [password, setPassword] = useState("")
+
+    const [badLogin, setBadLogin] = useState(false)
+
+    const [userDisplay, setUserDisplay] = useState("")
+    const [userScore, setUserScore] = useState("")
 
     useEffect(() => {
         rightSideMenuHook(IS_LAST_SMALLER_THEN_PREV, elIDs, 80)
+        const ud = localStorage.getItem('userDisplay');
+        if (ud) {
+            setDisplayName(ud)
+        }
+        const us = localStorage.getItem('userScore');
+        if (us) {
+            setUserScore(us)
+        }
+
     })
 
     const hamburgerLinks : Array<JSX.Element>= [
@@ -34,6 +56,60 @@ export const MainPage = () => {
         <li><a>Profile</a></li>,
         <li><a>Login</a></li>
     ];
+
+    if (displayName === "") {
+        stickyLinks.push(<li><a onClick={() => {setShowLogin(!showLogin)}}>Login</a></li>) 
+    }
+    else {
+        stickyLinks.push(<li><a>Hello {displayName}!</a></li>) 
+        stickyLinks.push(<li><a>Your Score: {userScore}</a></li>) 
+        stickyLinks.push(<li><a onClick={() => {signOut()}}>Sign Out</a></li>)
+
+    }
+
+    const callReplaceBadWords = async (s : string) => {
+        const resp = await axios.get(`http://localhost:8000/badwords`,{
+            params: {
+                target_string: s, 
+            },
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache"
+            },
+        });
+        setCurrentText(resp.data.data)
+    }
+
+    const signOut = () => {
+        localStorage.clear()
+        setUserScore("")
+        setDisplayName("")
+    }
+
+    const callLogin = async () => {
+        const resp : any = await axios.get(`http://localhost:8000/login`,{
+            params: {
+                username : userName,
+                password: password
+            },
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache"
+            },
+        }).catch(e => {
+            setBadLogin(true)
+        })
+        if (!resp) {
+            return
+        }
+        localStorage.setItem('userDisplay', resp.data.displayname);
+        localStorage.setItem('userScore', resp.data.score.toString());
+        setDisplayName(resp.data.displayname)
+        setUserScore(resp.data.score)
+        setShowLogin(false)
+        setUserName("")
+        setPassword("")
+    }
 
     return (
         <div>
@@ -95,7 +171,16 @@ export const MainPage = () => {
                     </div>
                 </form>
             }
-            
+            {currentText !== "" && 
+                    <div style={{margin:"auto"}}>
+                        <button onClick={() => {
+                            callReplaceBadWords(currentText)
+                        
+                        }}>
+                            Magify it!
+                        </button>
+                    </div>
+                }
 
         </div>
     )
