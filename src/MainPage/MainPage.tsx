@@ -48,7 +48,7 @@ export const MainPage = () => {
     }
 
     const stickyLinks : JSX.Element[] = [      
-        <li><a style={{fontWeight: "bold", fontSize:"32px"}}>Magic Simplify</a></li>,
+        <li><a style={{fontWeight: "bold", fontSize:"32px"}}>Simply Read</a></li>,
         <li><a>Home</a></li>,
         <li><a>Profile</a></li>,
         
