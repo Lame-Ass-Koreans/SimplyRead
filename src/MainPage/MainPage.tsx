@@ -9,14 +9,12 @@ import { Nav } from "react-bootstrap";
 import { rightSideMenuHook } from './NavFunc'
 import axios from 'axios'
 import './MainPage.css'
+import Highlighter from "react-highlight-words";
 
-
-export const MainPage = () => {
-    const IS_LAST_SMALLER_THEN_PREV = true;
-    const elIDs : Array<string> = []
-
+export const MainPage = () => {    
     const [mode, setMode] = useState("");
     const [currentText, setCurrentText] = useState("");
+    const [newText, setNewText] = useState("");
     
     const [showLogin, setShowLogin] = useState(false)
     const [displayName, setDisplayName] = useState("")
@@ -29,8 +27,10 @@ export const MainPage = () => {
     const [userDisplay, setUserDisplay] = useState("")
     const [userScore, setUserScore] = useState("")
 
+    const [replacementDictionary, setReplacementDictionary] = useState({})
+    const [called, setCalled] = useState(false);
+
     useEffect(() => {
-        rightSideMenuHook(IS_LAST_SMALLER_THEN_PREV, elIDs, 80)
         const ud = localStorage.getItem('userDisplay');
         if (ud) {
             setDisplayName(ud)
@@ -39,15 +39,27 @@ export const MainPage = () => {
         if (us) {
             setUserScore(us)
         }
-
     })
 
-    const hamburgerLinks : Array<JSX.Element>= [
-        <li className="uk-nav-divider"></li>,
-    ]
-
-    const rightSideSubLinks = {
+    const getHighlightedText = () : JSX.Element => {
+        const matchTargets = Object.keys(objectFlip(replacementDictionary))
+        return <Highlighter
+                highlightClassName="YourHighlightClass"
+                searchWords={matchTargets}
+                autoEscape={true}
+                textToHighlight={newText}
+            />
+        
     }
+
+    const objectFlip = (obj: any) => {
+        const ret : any = {};
+        Object.keys(obj).forEach(key => {
+            ret[obj[key]] = key;
+        });
+        return ret;
+      }
+      
 
     const stickyLinks : JSX.Element[] = [      
         <li className="DD"><a style={{fontFamily: "Stencil Std", fontWeight: "bold", fontSize:"32px"}}>Simply Read</a></li>,
@@ -76,7 +88,23 @@ export const MainPage = () => {
                 "Cache-Control": "no-cache"
             },
         });
-        setCurrentText(resp.data.data)
+        setCalled(true)
+        callReplaceToEasyWords(resp.data.data)
+        setNewText(resp.data.data)
+    }
+
+    const callReplaceToEasyWords = async (s : string) => {
+        const resp = await axios.get(`http://localhost:8000/simplify`,{
+            params: {
+                target_string: s, 
+            },
+            headers: {
+                "Content-Type": "application/json",
+                "Cache-Control": "no-cache"
+            },
+        });
+        setNewText(resp.data.data)
+        setReplacementDictionary(resp.data.dict)
     }
 
     const signOut = () => {
@@ -103,6 +131,7 @@ export const MainPage = () => {
         }
         localStorage.setItem('userDisplay', resp.data.displayname);
         localStorage.setItem('userScore', resp.data.score.toString());
+        localStorage.setItem('userPreset', resp.data.preset.toString());
         setDisplayName(resp.data.displayname)
         setUserScore(resp.data.score)
         setShowLogin(false)
@@ -165,6 +194,8 @@ export const MainPage = () => {
                         onClick={() => {
                             setMode("")
                             setCurrentText("")
+                            setNewText("")
+                            setCalled(false)
                         }}>
                             Go Back
                         </button>
@@ -206,10 +237,11 @@ export const MainPage = () => {
                     </div>
                 }
 
+                {called && getHighlightedText()}
+
             </div>
             
-            
-
         </div>
     )
 }
+
