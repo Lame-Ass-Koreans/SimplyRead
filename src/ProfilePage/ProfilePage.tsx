@@ -131,55 +131,45 @@ export const ProfilePage = () => {
             <div className="main">
                 <div className="leftPanel">
                     <img src="defaultPerson.png"></img>
-                    <div>
-                        <h1>
+                </div>
+                <div className="indicatorPanel">
+                        <div></div>
+                        <h1 style={{lineHeight: "10px", fontFamily: "Arial Black", fontWeight: "bold", fontSize:"32px"}}>
                             {displayName}
                         </h1>
                         {targetJson  ? 
                             <div>
-                                <h2>
-                                    {targetJson.email}
-                                </h2>
-                                <h2>
-                                    {targetJson.phone}
-                                </h2>
-                                <h2>
-                                    {targetJson.gender}
-                                </h2>
-                                <h2>
-                                    {targetJson.age}
-                                </h2>
-                                <h2>
-                                    {targetJson.ethnicity}
-                                </h2>
+                                <h4>
+                                    <div>Email: {targetJson.email}</div>
+                                    <div>phone: {targetJson.phone} </div>
+                                    <div>Gender: {targetJson.gender} </div>
+                                    <div>Age: {targetJson.age} </div> 
+                                    <div>Country: {targetJson.ethnicity} </div>
+                                </h4>
                             </div>
                         : <h2>Please log in first!</h2>}
-
-                    </div>
-                </div>
-                <div className="indicatorPanel">
-                    
                 </div>
                 <div className="rightPanel">
-                    <Chart
+                    {targetJson && targetJson.email === "adavoodi@ranchview.edu" && <div>
+                        <Chart
                         width={'100%'}
                         height={'400px'}
                         chartType="LineChart"
                         loader={<div>Loading Chart</div>}
                         data={[
                           ['x', ''],
-                          [0, 0],
-                          [1, 10],
-                          [2, 23],
-                          [3, 17],
-                          [4, 18],
-                          [5, 9],
-                          [6, 11],
-                          [7, 27],
-                          [8, 33],
-                          [9, 40],
-                          [10, 32],
-                          [11, 35],
+                          [0, 14],
+                          [1, 50],
+                          [2, 230],
+                          [3, 412],
+                          [4, 780],
+                          [5, 1290],
+                          [6, 2300],
+                          [7, 3322],
+                          [8, 3430],
+                          [9, 5012],
+                          [10,6801],
+                          [11, 7500],
                         ]}
                         options={{
                           hAxis: {
@@ -193,8 +183,9 @@ export const ProfilePage = () => {
                     >
 
                     </Chart>
-                    <img style={{height:"auto", width:"100%"}} src={"wordcloud1.png"}>
+                    <img style={{height:"auto", width:"70%"}} src={"wordcloud1.png"}>
                     </img>
+                    </div>}
                 </div>
             </div>        
         </div>
