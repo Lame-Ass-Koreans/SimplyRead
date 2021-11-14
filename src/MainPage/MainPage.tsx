@@ -50,7 +50,7 @@ export const MainPage = () => {
     }
 
     const stickyLinks : JSX.Element[] = [      
-        <li><a style={{fontFamily: "Stencil Std", fontWeight: "bold", fontSize:"32px"}}>Simply Read</a></li>,
+        <li className="DD"><a style={{fontFamily: "Stencil Std", fontWeight: "bold", fontSize:"32px"}}>Simply Read</a></li>,
         //<li><img src="logo.png" height = "70px" width = "200px" alt="me"/></li>,
         <li><a>Home</a></li>,
         <li><a>Profile</a></li>,
@@ -111,18 +111,18 @@ export const MainPage = () => {
     }
 
     return (
-        <div style={{height:"350px"}}>
+        <div>
             <div>
                 <StickyNav toggleRSM={false} links={stickyLinks}/>
             </div>
             {showLogin && 
                 <div>
                     <div>
-                        <div>
-                            <input value={userName} onChange={(e) => {setUserName(e.target.value);setBadLogin(false)}} style={{backgroundColor:"lightgrey"}}className="uk-input" type="text" placeholder="Username"/>
+                        <div className="login1">
+                            <input value={userName} onChange={(e) => {setUserName(e.target.value);setBadLogin(false)}} type="text" placeholder="Username"/>
                         </div>
-                        <div>
-                            <input value={password} onChange={(e) => {setPassword(e.target.value);setBadLogin(false)}} style={{backgroundColor:"lightgrey"}}className="uk-input" type="password" placeholder="Password"/>
+                        <div className="login2">
+                            <input value={password} onChange={(e) => {setPassword(e.target.value);setBadLogin(false)}} type="password" placeholder="Password"/>
                         </div>
                         <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
                             callLogin()
@@ -172,7 +172,9 @@ export const MainPage = () => {
                 }
                 {mode === "WRITE" && 
                     <form>
+                        <div>
                         <textarea value={currentText} onChange={(e) => {setCurrentText(e.target.value)}} placeholder="Type your content here"></textarea>
+                        </div>
                     </form>
                 }
                 {mode === "URL" && 
