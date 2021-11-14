@@ -98,18 +98,46 @@ textarea:hover {
     margin-left: auto;
     margin-right: auto;
 }
+.login0 {
+    position:absolute;
+    width:1000px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
 
 .login1 input,
 .login2 input{
     background: transparent;
-	width: 100px;
-	height: 30px;
+	width: 80px;
+	height: 20px;
     border-style: solid;
     border-width: 1px;
     border-color: darkgrey;
 	transition: .3s;
 	padding: 5px;
     
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login3 button{
+    color: darkgrey;
+    font-size: 10px;
+    font-weight: bold;
+    font-family: "Trebuchet MS";
+    
+    background-color: black;
+    border: none;
+    padding: 10px 10px;
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+    margin: 10px;
+    transition: 0.3s;
+    border-radius:0px;
+
     display: block;
     margin-left: auto;
     margin-right: auto;

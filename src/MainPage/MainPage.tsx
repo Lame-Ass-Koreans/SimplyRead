@@ -151,20 +151,22 @@ export const MainPage = () => {
                 <StickyNav toggleRSM={false} links={stickyLinks}/>
             </div>
             {showLogin && 
-                <div style={{position:"absolute", zIndex:10, width:"100%", outline:"solid", backgroundColor:"white"}}>
-                    <div>
+                <div>
+                    <div className="login0">
                         <div className="login1">
                             <input value={userName} onChange={(e) => {setUserName(e.target.value);setBadLogin(false)}} type="text" placeholder="Username"/>
                         </div>
                         <div className="login2">
                             <input value={password} onChange={(e) => {setPassword(e.target.value);setBadLogin(false)}} type="password" placeholder="Password"/>
                         </div>
-                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
+                        <div className="login3">
+                        <button onClick={() => {
                             callLogin()
                         }}>
                             Login
                         </button>
-                        {badLogin && <p style={{color: "red"}}>
+                        </div>
+                        {badLogin && <p style={{color: "red", textAlign:'center'}}>
                             Login Failed!
                         </p>}
                     </div>
