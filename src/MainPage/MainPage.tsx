@@ -138,21 +138,21 @@ export const MainPage = () => {
             <div>
                 {mode === "" && <div style={{display: "flex", marginTop:"100px"}}>
                     <div style={{margin:"auto"}}>
-                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
+                        <button onClick={() => {
                             setMode("WRITE")
                         }}>
                             Paste/Write
                         </button>
                     </div>
                     <div style={{margin:"auto"}}>
-                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
+                        <button onClick={() => {
                             setMode("URL")
                         }}>
                             Import from URL
                         </button>
                     </div>
                     <div style={{margin:"auto"}}>
-                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
+                        <button onClick={() => {
                             setMode("UPLOAD")
                         }}>
                             Upload a file
@@ -161,7 +161,7 @@ export const MainPage = () => {
                 </div>}
                 {mode !== "" && 
                     <div style={{margin:"auto"}}>
-                        <button className="uk-button uk-button-secondary uk-button-large"
+                        <button
                         onClick={() => {
                             setMode("")
                             setCurrentText("")
