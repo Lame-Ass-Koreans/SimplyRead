@@ -1,0 +1,17 @@
+{
+    "name": "Aaron, Davoodi",
+    "email": "adavoodi@ranchview.edu",
+    "phone": "972-668-1250",
+    "gender": "male",
+    "age": "28",
+    "ethnicity": "United States",
+    "magifyCount": {
+      "May": "20",
+      "Jun": "36",
+      "July": "72",
+      "August": "90",
+      "October": "119",
+      "November": "150"
+    }
+  
+}

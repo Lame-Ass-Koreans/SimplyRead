@@ -1,0 +1,18 @@
+ {
+    "name": "Taek Kim",
+    "email": "hxk151830@utdallas.edu",
+    "phone": "214-606-4826",
+    "gender": "male",
+    "age": "22",
+    "ethnicity": "South Korea",
+    "magifyCount": {
+      "May": "3",
+      "Jun": "18",
+      "July": "42",
+      "August": "162",
+      "October": "219",
+      "November": "300"
+    }
+  
+  
+}
