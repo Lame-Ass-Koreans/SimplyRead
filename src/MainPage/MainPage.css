@@ -41,7 +41,7 @@ textarea:hover {
     transition: 0.3s;
 }
 
-input {
+.inp1 input {
 	background: transparent;
 	width: 80%;
 	height: 15px;
@@ -57,10 +57,27 @@ input {
     margin-right: auto;
 }
 
-input:focus,
-input:hover {
+.inp1 input:focus,
+.inp1 input:hover {
 	height: 25px;
     transition: 0.3s;
+}
+
+.inp2 input {
+	background: transparent;
+	width: 40%;
+	height: 30px;
+    border-style: solid;
+    border-width: 20px 1px 1px 1px;
+    border-color: darkgrey;
+    border-top-color: #2E8161;
+	transition: .3s;
+	padding: 15px;
+    padding-bottom: 10px;
+    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 

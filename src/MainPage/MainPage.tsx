@@ -177,16 +177,16 @@ export const MainPage = () => {
                 }
                 {mode === "URL" && 
                     <form>
-                        <div className="uk-margin">
+                        <div className="inp1">
                             <input type="text" placeholder="Type your url here"/>
                         </div>
                     </form>
                 }
                 {mode === "UPLOAD" && 
                     <form>
-                        <div className="js-upload uk-placeholder uk-text-center">
+                        <div className="inp2" style={{textAlign:'center'}}>
                             <span uk-icon="icon: cloud-upload"></span>
-                            <span style={{color:"black"}} className="uk-text-middle">Attach binaries by dropping them here or selecting one</span>
+                            <span>Attach binaries by dropping them here or selecting one</span>
                             <div style={{color:"black"}} uk-form-custom>
                                 <input type="file" multiple/>
                             </div>
