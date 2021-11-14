@@ -54,9 +54,8 @@ export const MainPage = () => {
         //<li><img src="logo.png" height = "70px" width = "200px" alt="me"/></li>,
         <li><a>Home</a></li>,
         <li><a>Profile</a></li>,
-        <li><a>Login</a></li>
+        
     ];
-
     if (displayName === "") {
         stickyLinks.push(<li><a onClick={() => {setShowLogin(!showLogin)}}>Login</a></li>) 
     }
@@ -112,66 +111,89 @@ export const MainPage = () => {
     }
 
     return (
-        <div>
+        <div style={{height:"350px"}}>
             <div>
                 <StickyNav toggleRSM={false} links={stickyLinks}/>
             </div>
-            {mode === "" && <div style={{display: "flex"}}>
-                <div style={{margin:"auto"}}>
-                    <button onClick={() => {
-                        setMode("WRITE")
-                    }}>
-                        Paste/Write
-                    </button>
-                </div>
-                <div style={{margin:"auto"}}>
-                    <button onClick={() => {
-                        setMode("URL")
-                    }}>
-                        Import from URL
-                    </button>
-                </div>
-                <div style={{margin:"auto"}}>
-                    <button onClick={() => {
-                        setMode("UPLOAD")
-                    }}>
-                        Upload a file
-                    </button>
-                </div>
-            </div>}
-            {mode !== "" && 
-                <div style={{margin:"auto"}}>
-                    <button onClick={() => {
-                        setMode("")
-                    }}>
-                        Go Back
-                    </button>
-                </div>
-            }
-            {mode === "WRITE" && 
-                <form>
-                    <textarea placeholder="Type your content here"></textarea>
-                </form>
-            }
-            {mode === "URL" && 
-                <form>
-                     <div className="uk-margin">
-                        <input type="text" placeholder="Type your url here"/>
-                    </div>
-                </form>
-            }
-            {mode === "UPLOAD" && 
-                <form>
-                    <div className="js-upload uk-placeholder uk-text-center">
-                        <span uk-icon="icon: cloud-upload"></span>
-                        <span className="uk-text-middle">Attach binaries by dropping them here or selecting one</span>
-                        <div uk-form-custom>
-                            <input type="file" multiple/>
+            {showLogin && 
+                <div>
+                    <div>
+                        <div>
+                            <input value={userName} onChange={(e) => {setUserName(e.target.value);setBadLogin(false)}} style={{backgroundColor:"lightgrey"}}className="uk-input" type="text" placeholder="Username"/>
                         </div>
+                        <div>
+                            <input value={password} onChange={(e) => {setPassword(e.target.value);setBadLogin(false)}} style={{backgroundColor:"lightgrey"}}className="uk-input" type="password" placeholder="Password"/>
+                        </div>
+                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
+                            callLogin()
+                        }}>
+                            Login
+                        </button>
+                        {badLogin && <p style={{color: "red"}}>
+                            Login Failed!
+                        </p>}
                     </div>
-                </form>
+                </div>
             }
-            {currentText !== "" && 
+            <div>
+                {mode === "" && <div style={{display: "flex", marginTop:"100px"}}>
+                    <div style={{margin:"auto"}}>
+                        <button onClick={() => {
+                            setMode("WRITE")
+                        }}>
+                            Paste/Write
+                        </button>
+                    </div>
+                    <div style={{margin:"auto"}}>
+                        <button onClick={() => {
+                            setMode("URL")
+                        }}>
+                            Import from URL
+                        </button>
+                    </div>
+                    <div style={{margin:"auto"}}>
+                        <button onClick={() => {
+                            setMode("UPLOAD")
+                        }}>
+                            Upload a file
+                        </button>
+                    </div>
+                </div>}
+                {mode !== "" && 
+                    <div style={{margin:"auto"}}>
+                        <button
+                        onClick={() => {
+                            setMode("")
+                            setCurrentText("")
+                        }}>
+                            Go Back
+                        </button>
+                    </div>
+                }
+                {mode === "WRITE" && 
+                    <form>
+                        <textarea value={currentText} onChange={(e) => {setCurrentText(e.target.value)}} placeholder="Type your content here"></textarea>
+                    </form>
+                }
+                {mode === "URL" && 
+                    <form>
+                        <div className="uk-margin">
+                            <input type="text" placeholder="Type your url here"/>
+                        </div>
+                    </form>
+                }
+                {mode === "UPLOAD" && 
+                    <form>
+                        <div className="js-upload uk-placeholder uk-text-center">
+                            <span uk-icon="icon: cloud-upload"></span>
+                            <span style={{color:"black"}} className="uk-text-middle">Attach binaries by dropping them here or selecting one</span>
+                            <div style={{color:"black"}} uk-form-custom>
+                                <input type="file" multiple/>
+                            </div>
+                        </div>
+                    </form>
+                }
+                {currentText !== "" && 
                     <div style={{margin:"auto"}}>
                         <button onClick={() => {
                             callReplaceBadWords(currentText)
@@ -181,6 +203,10 @@ export const MainPage = () => {
                         </button>
                     </div>
                 }
+
+            </div>
+            
+            
 
         </div>
     )
