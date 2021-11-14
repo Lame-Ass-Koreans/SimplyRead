@@ -75,6 +75,7 @@
   }
   
   .login0 {
+    z-index: 15;
     position:absolute;
     width:1000px;
     margin-left: auto;
