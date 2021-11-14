@@ -145,7 +145,7 @@ export const MainPage = () => {
                 <StickyNav toggleRSM={false} links={stickyLinks}/>
             </div>
             {showLogin && 
-                <div>
+                <div style={{position:"absolute", zIndex:10, width:"100%", outline:"solid", backgroundColor:"white"}}>
                     <div>
                         <div className="login1">
                             <input value={userName} onChange={(e) => {setUserName(e.target.value);setBadLogin(false)}} type="text" placeholder="Username"/>
@@ -244,4 +244,3 @@ export const MainPage = () => {
         </div>
     )
 }
-
