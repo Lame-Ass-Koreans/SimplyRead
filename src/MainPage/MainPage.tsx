@@ -52,8 +52,8 @@ export const MainPage = () => {
     const stickyLinks : JSX.Element[] = [      
         <li><a style={{fontFamily: "Stencil Std", fontWeight: "bold", fontSize:"32px"}}>Simply Read</a></li>,
         //<li><img src="logo.png" height = "70px" width = "200px" alt="me"/></li>,
-        <li><a>Home</a></li>,
-        <li><a>Profile</a></li>,
+        <li><a href={'/'}>Home</a></li>,
+        <li><a href={'/profile'}>Profile</a></li>,
         
     ];
     if (displayName === "") {

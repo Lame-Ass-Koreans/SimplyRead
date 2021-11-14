@@ -1,0 +1,18 @@
+{
+  
+    "name": "Zia Wallis",
+    "email": "sxk010101@utdallas.edu",
+    "phone": "210-636-6828",
+    "gender": "female",
+    "age": "20",
+    "ethnicity": "French",
+    "magifyCount": {
+      "May": "42",
+      "Jun": "98",
+      "July": "142",
+      "August": "184",
+      "October": "228",
+      "November": "331"
+    }
+  
+}

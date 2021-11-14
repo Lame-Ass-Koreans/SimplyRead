@@ -1,0 +1,17 @@
+{
+    "name": "John Doe",
+    "email": "jondoe@hotmail.com",
+    "phone": "469-469-4694",
+    "gender": "male",
+    "age": "42",
+    "ethnicity": "United States",
+    "magifyCount": {
+      "May": "3",
+      "Jun": "18",
+      "July": "20",
+      "August": "32",
+      "October": "68",
+      "November": "81"
+    }
+  
+}
