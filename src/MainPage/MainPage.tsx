@@ -36,7 +36,11 @@ export const MainPage = () => {
     ];
 
     return (
+<<<<<<< Updated upstream
         <div>
+=======
+        <div style={{height:"350px"}}>
+>>>>>>> Stashed changes
             <div>
                 <StickyNav toggleRSM={false} links={stickyLinks}/>
             </div>
@@ -82,6 +86,7 @@ export const MainPage = () => {
                      <div className="uk-margin">
                         <input className="uk-input" type="text" placeholder="Type your url here"/>
                     </div>
+<<<<<<< Updated upstream
                 </form>
             }
             {mode === "UPLOAD" && 
@@ -92,6 +97,40 @@ export const MainPage = () => {
                         <div uk-form-custom>
                             <input type="file" multiple/>
                         </div>
+=======
+                }
+                {mode === "WRITE" && 
+                    <form>
+                        <textarea value={currentText} onChange={(e) => {setCurrentText(e.target.value)}} placeholder="Type your content here"></textarea>
+                    </form>
+                }
+                {mode === "URL" && 
+                    <form>
+                        <div className="uk-margin">
+                            <input type="text" placeholder="Type your url here"/>
+                        </div>
+                    </form>
+                }
+                {mode === "UPLOAD" && 
+                    <form>
+                        <div className="js-upload uk-placeholder uk-text-center">
+                            <span uk-icon="icon: cloud-upload"></span>
+                            <span style={{color:"black"}} className="uk-text-middle">Attach binaries by dropping them here or selecting one</span>
+                            <div style={{color:"black"}} uk-form-custom>
+                                <input type="file" multiple/>
+                            </div>
+                        </div>
+                    </form>
+                }
+                {currentText !== "" && 
+                    <div style={{margin:"auto"}}>
+                        <button onClick={() => {
+                            callReplaceBadWords(currentText)
+                        
+                        }}>
+                            Simplify
+                        </button>
+>>>>>>> Stashed changes
                     </div>
                 </form>
             }

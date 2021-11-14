@@ -20,19 +20,45 @@ button:hover {
     transition: 0.3s;
 }
 
-textarea{
+textarea {
 	background: transparent;
-	width: 80%;
-	height: 100px;
-	border: 1px solid;
-	transition: .5s;
-	margin: 5px 0;
-	padding: 5px;
+	width: 70%;
+	height: 150px;
+    border-style: solid;
+    border-width: 20px 1px 1px 1px;
+    border-top-color: #2E8161;
+	transition: .3s;
+	padding: 15px;
+    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+textarea:focus,
+textarea:hover {
+	height: 200px;
     transition: 0.3s;
 }
 
-textarea:hover {
-	height: 120px;
+input {
+	background: transparent;
+	width: 70%;
+	height: 50px;
+    border-style: solid;
+    border-width: 20px 1px 1px 1px;
+    border-top-color: #2E8161;
+	transition: .3s;
+	padding: 15px;
+    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input:focus,
+input:hover {
+	height: 60px;
     transition: 0.3s;
 }
 
@@ -42,14 +68,14 @@ th,
 td,
 input,
 select,
-textarea,
 code {
-	font-size: 12px;
+	font-size: 14px;
     font-weight: bold;
     color: black ;
     margin: 10px;
     line-height: 1.7;
     background: #eee;
+    font-family: "Lucida Console", "Courier New", monospace;
 }
 
 /* 배경 */
