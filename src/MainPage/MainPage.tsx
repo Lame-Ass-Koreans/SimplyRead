@@ -43,12 +43,18 @@ export const MainPage = () => {
 
     const getHighlightedText = () : JSX.Element => {
         const matchTargets = Object.keys(objectFlip(replacementDictionary))
-        return <Highlighter
-                highlightClassName="YourHighlightClass"
-                searchWords={matchTargets}
-                autoEscape={true}
-                textToHighlight={newText}
-            />
+        console.log(newText)
+        const lines = newText.split(/\r?\n/)
+         
+        return <div>
+                {lines.map((l : string) => <><Highlighter
+                    highlightClassName="YourHighlightClass"
+                    searchWords={matchTargets}
+                    autoEscape={true}
+                    textToHighlight={l}
+                /><div>&nbsp;</div></>
+                ) }
+            </div>
         
     }
 
@@ -237,7 +243,11 @@ export const MainPage = () => {
                     </div>
                 }
 
-                {called && getHighlightedText()}
+                {called && 
+                <div style={{width:"80%", marginLeft:"auto", minHeight:"200px", marginRight:"auto", padding:"5px", outline:"solid", outlineWidth:"2px"}}>
+                    {getHighlightedText()}
+                </div>
+                }
 
             </div>
             
