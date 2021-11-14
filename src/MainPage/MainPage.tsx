@@ -8,6 +8,8 @@ import { StickyNav } from '../Navigation/stickyNav';
 import { Nav } from "react-bootstrap";
 import { rightSideMenuHook } from './NavFunc'
 import axios from 'axios'
+import './MainPage.css'
+
 
 export const MainPage = () => {
     const IS_LAST_SMALLER_THEN_PREV = true;
@@ -48,7 +50,8 @@ export const MainPage = () => {
     }
 
     const stickyLinks : JSX.Element[] = [      
-        <li><a style={{fontWeight: "bold", fontSize:"32px"}}>Simply Read</a></li>,
+        <li><a style={{fontFamily: "Stencil Std", fontWeight: "bold", fontSize:"32px"}}>Simply Read</a></li>,
+        //<li><img src="logo.png" height = "70px" width = "200px" alt="me"/></li>,
         <li><a>Home</a></li>,
         <li><a>Profile</a></li>,
         
