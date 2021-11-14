@@ -107,26 +107,26 @@ export const ProfilePage = () => {
                 <StickyNav toggleRSM={false} links={stickyLinks}/>
             </div>
             {showLogin && 
-                <div style={{position:"absolute", zIndex:10, width:"100%", outline:"solid", backgroundColor:"white"}}>
-                    <div>
-                        <div className="login1">
-                            <input value={userName} onChange={(e) => {setUserName(e.target.value);setBadLogin(false)}} style={{backgroundColor:"lightgrey"}}className="uk-input" type="text" placeholder="Username"/>
-                        </div>
-                        <div className="login2">
-                            <input value={password} onChange={(e) => {setPassword(e.target.value);setBadLogin(false)}} style={{backgroundColor:"lightgrey"}}className="uk-input" type="password" placeholder="Password"/>
-                        </div>
-                        <button className="uk-button uk-button-secondary uk-button-large" onClick={() => {
-                            callLogin()
-                        }}>
-                            Login
-                        </button>
-                        {badLogin && <p style={{color: "red"}}>
-                            Login Failed!
-                        </p>}
-
-                        
+                <div>
+                <div className="login0">
+                    <div className="login1">
+                        <input value={userName} onChange={(e) => {setUserName(e.target.value);setBadLogin(false)}} type="text" placeholder="Username"/>
                     </div>
+                    <div className="login2">
+                        <input value={password} onChange={(e) => {setPassword(e.target.value);setBadLogin(false)}} type="password" placeholder="Password"/>
+                    </div>
+                    <div className="login3">
+                    <button onClick={() => {
+                        callLogin()
+                    }}>
+                        Login
+                    </button>
+                    </div>
+                    {badLogin && <p style={{color: "red", textAlign:'center'}}>
+                        Login Failed!
+                    </p>}
                 </div>
+            </div>
             }     
             <div className="main">
                 <div className="leftPanel">
