@@ -140,7 +140,7 @@ export const MainPage = () => {
     }
 
     return (
-        <div style={{height:"350px", backgroundColor: "grey"}}>
+        <div style={{height:"350px"}}>
             <div>
                 <StickyNav toggleRSM={false} links={stickyLinks}/>
             </div>
@@ -203,21 +203,21 @@ export const MainPage = () => {
                 }
                 {mode === "WRITE" && 
                     <form>
-                        <textarea style={{height:"500px"}} value={currentText} onChange={(e) => {setCurrentText(e.target.value)}} className="uk-textarea" placeholder="Type your content here"></textarea>
+                        <textarea value={currentText} onChange={(e) => {setCurrentText(e.target.value)}} placeholder="Type your content here"></textarea>
                     </form>
                 }
                 {mode === "URL" && 
                     <form>
-                        <div className="uk-margin">
-                            <input style={{backgroundColor:"lightgrey"}}className="uk-input" type="text" placeholder="Type your url here"/>
+                        <div className="inp1">
+                            <input type="text" placeholder="Type your url here"/>
                         </div>
                     </form>
                 }
                 {mode === "UPLOAD" && 
                     <form>
-                        <div className="js-upload uk-placeholder uk-text-center">
+                        <div className="inp2" style={{textAlign:'center'}}>
                             <span uk-icon="icon: cloud-upload"></span>
-                            <span style={{color:"black"}} className="uk-text-middle">Attach binaries by dropping them here or selecting one</span>
+                            <span>Attach binaries by dropping them here or selecting one</span>
                             <div style={{color:"black"}} uk-form-custom>
                                 <input type="file" multiple/>
                             </div>
@@ -239,8 +239,6 @@ export const MainPage = () => {
 
             </div>
             
-            
-
         </div>
     )
 }
