@@ -58,7 +58,7 @@ export const MainPage = () => {
     }
     else {
         stickyLinks.push(<li><a>Hello {displayName}!</a></li>) 
-        stickyLinks.push(<li><a>Your Score: {userScore}!</a></li>) 
+        stickyLinks.push(<li><a>Your Score: {userScore}</a></li>) 
         stickyLinks.push(<li><a onClick={() => {signOut()}}>Sign Out</a></li>)
 
     }
